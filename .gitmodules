@@ -1,0 +1,15 @@
+[submodule "yosys"]
+	path = yosys
+	url = https://github.com/cliffordwolf/yosys.git
+[submodule "SymbiYosys"]
+	path = SymbiYosys
+	url = https://github.com/cliffordwolf/SymbiYosys.git
+[submodule "z3"]
+	path = z3
+	url = https://github.com/Z3Prover/z3.git
+[submodule "boolector"]
+	path = boolector
+	url = https://github.com/Boolector/boolector.git
+[submodule "riscv-formal"]
+	path = riscv-formal
+	url = https://github.com/SymbioticEDA/riscv-formal.git
