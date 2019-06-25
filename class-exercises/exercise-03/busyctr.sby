@@ -1,0 +1,13 @@
+[options]
+mode bmc
+
+[engines]
+smtbmc
+
+[script]
+read -formal busyctr.v
+prep -top busyctr
+opt -share_all
+
+[files]
+busyctr.v

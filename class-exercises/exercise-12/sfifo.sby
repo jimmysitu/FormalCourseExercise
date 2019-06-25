@@ -1,0 +1,20 @@
+[tasks]
+cvr
+prf
+
+[options]
+prf: mode prove
+prf: depth 5
+cvr: mode cover
+cvr: depth 8
+
+[engines]
+smtbmc
+
+[script]
+read -formal sfifo.v
+
+prep -top sfifo
+
+[files]
+sfifo.v

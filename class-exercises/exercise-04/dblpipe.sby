@@ -1,0 +1,18 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+# abc pdr
+# abc pdr
+# aiger avy
+# aiger suprove
+
+[script]
+read -formal lfsr_fib.v
+read -formal dblpipe.v
+prep -top dblpipe
+
+[files]
+dblpipe.v
+lfsr_fib.v

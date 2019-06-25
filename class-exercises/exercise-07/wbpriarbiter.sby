@@ -1,0 +1,17 @@
+[options]
+mode prove
+depth 12
+
+[engines]
+smtbmc
+
+[script]
+read_verilog -formal wbpriarbiter.v
+read_verilog -formal fwb_slave.v
+read_verilog -formal fwb_master.v
+prep -top wbpriarbiter
+
+[files]
+fwb_slave.v
+fwb_master.v
+wbpriarbiter.v

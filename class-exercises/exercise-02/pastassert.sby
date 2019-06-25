@@ -1,0 +1,12 @@
+[options]
+mode bmc
+
+[engines]
+smtbmc
+
+[script]
+read_verilog -formal pastassert.v
+prep -top pastassert
+
+[files]
+pastassert.v

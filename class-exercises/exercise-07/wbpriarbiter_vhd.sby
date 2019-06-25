@@ -1,0 +1,24 @@
+[options]
+mode prove
+depth 12
+
+[engines]
+smtbmc
+# abc pdr
+# aig avy
+# aig suprove
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl wbpriarbiter.vhd
+verific -sv   fwb_slave.v
+verific -sv   fwb_master.v
+verific -sv   wbpriarbiter_vhd.sv
+verific -import -extnets -all wbpriarbiter
+prep -top wbpriarbiter
+
+[files]
+fwb_slave.v
+fwb_master.v
+wbpriarbiter.vhd
+wbpriarbiter_vhd.sv

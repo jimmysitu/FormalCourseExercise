@@ -10,6 +10,6 @@
 [submodule "boolector"]
 	path = boolector
 	url = https://github.com/Boolector/boolector.git
-[submodule "riscv-formal"]
-	path = riscv-formal
-	url = https://github.com/SymbioticEDA/riscv-formal.git
+[submodule "yices2"]
+	path = yices2
+	url = https://github.com/SRI-CSL/yices2.git

@@ -1,0 +1,13 @@
+[options]
+mode prove
+multiclock on
+
+[engines]
+smtbmc
+
+[script]
+read -formal iserdes.v
+prep -top iserdes
+
+[files]
+iserdes.v

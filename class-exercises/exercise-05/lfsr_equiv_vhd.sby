@@ -1,0 +1,26 @@
+[options]
+mode prove
+depth 24
+
+[engines]
+smtbmc
+# abc pdr
+# aig avy
+# aig suprove
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl lfsr_fib.vhd
+verific -vhdl lfsr_gal.vhd
+verific -vhdl lfsr_equiv.vhd
+verific -sv   lfsr_equiv_vhd.sv
+verific -import -extnets -all lfsr_equiv
+prep -top lfsr_equiv
+
+[files]
+lfsr_equiv.vhd
+lfsr_fib.vhd
+lfsr_gal.vhd
+lfsr_equiv_vhd.sv
+
+

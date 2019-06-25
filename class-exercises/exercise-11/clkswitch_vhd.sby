@@ -1,0 +1,18 @@
+[options]
+mode prove
+depth  55
+multiclock on
+
+[engines]
+smtbmc
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl clkswitch.vhd
+verific -sv   clkswitch_vhd.sv
+verific -import -extnets -all clkswitch
+prep -top clkswitch
+
+[files]
+clkswitch.vhd
+clkswitch_vhd.sv

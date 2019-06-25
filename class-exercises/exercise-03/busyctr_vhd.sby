@@ -1,0 +1,16 @@
+[options]
+mode bmc
+
+[engines]
+smtbmc
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl busyctr.vhd
+verific -sv busyctr_vhd.sv
+verific -import -extnets -all busyctr
+prep -top busyctr
+
+[files]
+busyctr.vhd
+busyctr_vhd.sv

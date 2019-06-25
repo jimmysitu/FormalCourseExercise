@@ -1,0 +1,30 @@
+$var integer 32 t smt_step $end
+$var event 1 ! smt_clock $end
+$scope module counter $end
+$scope module copy $end
+$var wire 16 n0 counts $end
+$var wire 1 n1 i_clk $end
+$var wire 1 n2 i_start_signal $end
+$var wire 1 n3 o_busy $end
+$upscope $end
+$var wire 16 n4 counts $end
+$var wire 1 n5 i_clk $end
+$var wire 1 n6 i_start_signal $end
+$var wire 1 n7 o_busy $end
+$upscope $end
+$enddefinitions $end
+#0
+1!
+b00000000000000000000000000000000 t
+b1000000000000000 n0
+b0 n1
+b0 n2
+b0 n3
+b1000000000000000 n4
+b0 n5
+b0 n6
+b0 n7
+#5
+#10
+1!
+b00000000000000000000000000000001 t

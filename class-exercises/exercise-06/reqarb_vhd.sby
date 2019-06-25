@@ -1,0 +1,20 @@
+[options]
+mode prove
+depth 12
+
+[engines]
+smtbmc
+# abc pdr
+# aig avy
+# aig suprove
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl reqarb.vhd
+verific -sv   reqarb_vhd.sv
+verific -import -extnets -all reqarb
+prep -top reqarb
+
+[files]
+reqarb.vhd
+reqarb_vhd.sv

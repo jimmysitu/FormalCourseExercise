@@ -1,0 +1,17 @@
+[options]
+mode prove
+multiclock on
+
+[engines]
+smtbmc
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl clkgate.vhd
+verific -sv   clkgate_vhd.sv
+verific -import -extnets -all clkgate
+prep -top clkgate
+
+[files]
+clkgate.vhd
+clkgate_vhd.sv

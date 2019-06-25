@@ -1,0 +1,22 @@
+[options]
+mode prove
+multiclock on
+depth 25
+
+[engines]
+smtbmc
+# abc pdr
+# abc pdr
+# aiger avy
+# aiger suprove
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl iserdes.vhd
+verific -sv   iserdes_vhd.sv
+verific -import -extnets -all iserdes
+prep -top iserdes
+
+[files]
+iserdes.vhd
+iserdes_vhd.sv

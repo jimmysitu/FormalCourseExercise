@@ -1,0 +1,22 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+# abc pdr
+# abc pdr
+# aiger avy
+# aiger suprove
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl lfsr_fib.vhd
+verific -vhdl dblpipe.vhd
+verific -sv dblpipe_vhd.sv
+verific -import -extnets -all dblpipe
+prep -top dblpipe
+
+[files]
+lfsr_fib.vhd
+dblpipe.vhd
+dblpipe_vhd.sv

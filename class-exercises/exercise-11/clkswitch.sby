@@ -1,0 +1,13 @@
+[options]
+mode prove
+multiclock on
+
+[engines]
+smtbmc
+
+[script]
+read -formal clkswitch.v
+prep -top clkswitch
+
+[files]
+clkswitch.v

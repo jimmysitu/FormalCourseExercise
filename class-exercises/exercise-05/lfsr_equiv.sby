@@ -1,0 +1,20 @@
+[options]
+mode prove
+depth 12
+
+[engines]
+smtbmc
+# abc pdr
+# aig avy
+# aig suprove
+
+[script]
+read -formal lfsr_fib.v
+read -formal lfsr_gal.v
+read -formal lfsr_equiv.v
+prep -top lfsr_equiv
+
+[files]
+lfsr_equiv.v
+lfsr_fib.v
+lfsr_gal.v

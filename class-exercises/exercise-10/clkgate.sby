@@ -1,0 +1,16 @@
+[options]
+mode prove
+multiclock on
+
+[engines]
+smtbmc
+# abc pdr
+# aig avy
+# aig suprove
+
+[script]
+read -formal clkgate.v
+prep -top clkgate
+
+[files]
+clkgate.v

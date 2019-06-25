@@ -1,0 +1,16 @@
+[options]
+mode prove
+depth 12
+
+[engines]
+smtbmc
+# abc pdr
+# aig avy
+# aig suprove
+
+[script]
+read -formal reqarb.v
+prep -top reqarb
+
+[files]
+reqarb.v

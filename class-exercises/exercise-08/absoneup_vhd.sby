@@ -1,0 +1,16 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+verific -vlog-define FORMAL
+verific -vhdl absoneup.vhd
+verific -sv   absoneup_vhd.sv
+verific -import -extnets -all absoneup
+prep -top absoneup
+
+[files]
+absoneup.vhd
+absoneup_vhd.sv
