@@ -12,6 +12,7 @@ smtbmc
 read -formal lfsr_fib.v
 read -formal dblpipe.v
 prep -top dblpipe
+opt_merge -share_all
 
 [files]
 dblpipe.v

@@ -61,4 +61,9 @@ module dblpipe(i_clk,
 	initial	o_data = 1'b0;
 	always @(posedge i_clk)
 		o_data <= a_data ^ b_data;
+
+`ifdef FORMAL
+    always @(*)
+        assert(!o_data);
+`endif
 endmodule
