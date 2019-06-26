@@ -1,5 +1,5 @@
 # FormalCourseExercise
-Exercise of Formal Verification Courseware
+Exercise of Formal Verification Courseware. Slides can be found [here](https://zipcpu.com/tutorial/#training)
 
 ## Usage
 - Install prerequisites
