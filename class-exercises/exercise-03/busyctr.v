@@ -69,10 +69,29 @@ module	busyctr(i_clk, i_reset,
 		else if (counter != 0)
 			counter <= counter - 1'b1;
 
-	always @(*)
+	always @(posedge i_clk)
 		o_busy <= (counter != 0);
 
 `ifdef	FORMAL
 	// Your formal properties would go here
+    reg f_past_valid ;
+    initial f_past_valid = 1'b0;
+    always @(posedge i_clk)
+        f_past_valid <= 1'b1;
+    
+    always @(posedge i_clk) begin
+        if(f_past_valid && $past(counter !=0)) begin
+            assert($past(counter) > counter);
+            assert(o_busy);
+        end
+        if(f_past_valid && $past(counter == 0))
+            assert(!o_busy);
+    end
+
+    always @(*) begin
+        if(o_busy)
+            assume(i_start_signal);
+    end
+
 `endif
 endmodule
