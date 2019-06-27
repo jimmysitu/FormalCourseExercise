@@ -66,7 +66,20 @@ module	lfsr_equiv(i_clk, i_reset, i_ce, i_in, o_bit);
 	assign	o_bit = fib_bit ^ gal_bit;
 
 `ifdef	FORMAL
-	always @(*)
+    reg f_past_valid;
+    initial f_past_valid = 0;
+    always @(posedge i_clk) begin
+        f_past_valid = 1;
+    end
+
+    always @(posedge i_clk) begin
+        if (f_past_valid && !$past(i_reset) && !$past(i_ce)) begin
+            assert(fib_bit == $past(fib_bit));
+            assert(gal_bit == $past(gal_bit));
+        end
+    end
+	
+    always @(*)
 		assert(!o_bit);
 `endif
 endmodule
