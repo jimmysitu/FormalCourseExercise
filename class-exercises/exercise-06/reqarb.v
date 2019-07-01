@@ -95,5 +95,39 @@ module	reqarb(i_clk, i_reset,
 	assign	o_data = (a_is_the_owner) ? i_a_data : i_b_data;
 
 `ifdef	FORMAL
+    reg f_past_valid;
+    initial
+        f_past_valid = 0;
+    always @(posedge i_clk)
+        f_past_valid = 1;
+
+    always @(posedge i_clk)begin
+        if(f_past_valid && !i_reset && $past(o_a_busy) && $past(i_a_req))
+            assume(i_a_req);
+        if(f_past_valid && !i_reset && $past(o_b_busy) && $past(i_b_req))
+            assume(i_b_req);
+    end
+
+    always @(*)begin
+        // 1. Prove no data will be lost
+        if(!i_reset && ((i_a_req && !o_a_busy) || (i_b_req && !o_b_busy)))begin
+            assert((o_data==i_a_data) || (o_data==i_b_data));
+        end
+    end
+
+    always @(*)begin
+        // 2. Prove only one source will ever have access to the channel
+        if(!i_reset && !i_busy && (i_a_req && i_b_req))begin
+            assert(o_req);
+            assert(o_a_busy ^ o_b_busy);
+        end
+    end
+
+    always @(*)begin
+        // 3. All requests will go through
+        if(!i_reset && ((i_a_req && !o_a_busy) || (i_b_req && !o_b_busy)))begin
+            assert(o_req);
+        end
+    end
 `endif
 endmodule
