@@ -60,6 +60,9 @@ module	counter(i_clk, i_start_signal, o_busy);
 		o_busy <= (counter != 0);
 
 `ifdef	FORMAL
+    initial // Add for formal initial constrait
+		counter <= MAX_AMOUNT-1'b1;
+
 	always @(*)
 		assert(counter < MAX_AMOUNT);
 `endif
