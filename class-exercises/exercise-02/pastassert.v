@@ -41,7 +41,7 @@
 //
 module	pastassert(i_clk, i_start_signal, o_busy);
 	parameter	[15:0]	MAX_AMOUNT = 22;
-	parameter		F_TESTID=1;
+	parameter		F_TESTID=4;
 	//
 	input	wire	i_clk;
 	//
