@@ -102,6 +102,7 @@ module	reqarb(i_clk, i_reset,
         f_past_valid = 1;
 
     always @(posedge i_clk)begin
+        // req may not change, except on reset
         if(f_past_valid && !i_reset && $past(o_a_busy) && $past(i_a_req))
             assume(i_a_req);
         if(f_past_valid && !i_reset && $past(o_b_busy) && $past(i_b_req))
