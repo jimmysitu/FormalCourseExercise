@@ -152,5 +152,67 @@ module	wbpriarbiter(i_clk,
 	//
 	// Your properties go here
 	//
+	parameter		F_LGDEPTH = 4;
+    wire i_reset;
+    wire [(F_LGDEPTH-1):0] f_a_nreqs, f_b_nreqs, f_m_nreqs;
+    wire [(F_LGDEPTH-1):0] f_a_nacks, f_b_nacks, f_m_nacks;
+    wire [(F_LGDEPTH-1):0] f_a_outstanding, f_b_outstanding, f_m_outstanding;
+
+    fwb_slave #(.AW(AW), .DW(DW))slv_a(
+        .i_clk(i_clk), .i_reset(i_reset),
+		// The Wishbone bus
+		.i_wb_cyc(i_a_cyc), .i_wb_stb(i_a_stb), .i_wb_we(i_a_we),
+        .i_wb_addr(i_a_adr), .i_wb_data(i_a_dat), .i_wb_sel(i_a_sel),
+		.i_wb_ack(o_a_ack), .i_wb_stall(o_a_stall), .i_wb_idata(o_dat),
+        .i_wb_err(o_a_err),
+		// Some convenience output parameters
+		.f_nreqs(f_a_nreqs), .f_nacks(f_a_nacks),
+        .f_outstanding(f_a_outstanding)
+    );
+    fwb_slave #(.AW(AW), .DW(DW))slv_b(
+        .i_clk(i_clk), .i_reset(i_reset),
+		// The Wishbone bus
+		.i_wb_cyc(i_b_cyc), .i_wb_stb(i_b_stb), .i_wb_we(i_b_we),
+        .i_wb_addr(i_b_adr), .i_wb_data(i_b_dat), .i_wb_sel(i_b_sel),
+		.i_wb_ack(o_b_ack), .i_wb_stall(o_b_stall), .i_wb_idata(o_dat),
+        .i_wb_err(o_b_err),
+		// Some convenience output parameters
+		.f_nreqs(f_b_nreqs), .f_nacks(f_b_nacks),
+        .f_outstanding(f_b_outstanding)
+
+    );
+    fwb_master #(.AW(AW), .DW(DW))mst(
+        .i_clk(i_clk), .i_reset(i_reset),
+		// The Wishbone bus
+        .i_wb_cyc(o_cyc), .i_wb_stb(o_stb), .i_wb_we(o_we),
+        .i_wb_addr(o_adr), .i_wb_data(o_dat), .i_wb_sel(o_sel),
+        .i_wb_ack(i_ack), .i_wb_stall(i_stall), .i_wb_err(i_err),
+		// Some convenience output parameters
+		.f_nreqs(f_m_nreqs), .f_nacks(f_m_nacks),
+        .f_outstanding(f_m_outstanding)
+    );
+
+	//
+	// A quick register to be used later to know if the $past() operator
+	// will yield valid result
+	reg	f_past_valid;
+	initial	f_past_valid = 1'b0;
+	always @(posedge i_clk)
+		f_past_valid <= 1'b1;
+    
+    always @(*)begin
+        if(f_past_valid & r_a_owner)begin
+            assert(f_m_nreqs==f_a_nreqs);
+            assert(f_m_nacks==f_a_nacks);
+            assert(f_b_nreqs=='d0);
+            assert(f_b_nacks=='d0);
+        end else begin
+            assert(f_m_nreqs==f_b_nreqs);
+            assert(f_m_nacks==f_b_nacks);
+            assert(f_a_nreqs=='d0);
+            assert(f_a_nacks=='d0);
+        end
+    end
+
 `endif
 endmodule
