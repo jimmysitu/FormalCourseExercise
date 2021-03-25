@@ -76,6 +76,17 @@ module	absoneup(i_clk, o_carry);
 		//
 		// Your logic goes here
 		//
+        wire [31:0] rollover;
+        assign rollover = - r_count;
+        always @(*) begin
+            assume(increment > 0);
+            assume(increment < {2'h1, 30'h0});
+            if(rollover < 32'd1)
+                assume(increment == 32'd1);
+            else
+                assume(increment < rollover);
+        end
+
 
 	end else begin : NO_ABSTRACTION
 
@@ -97,5 +108,21 @@ module	absoneup(i_clk, o_carry);
 	//
 	// Your proof goes here
 	//
+    //	1. That o_carry still takes place anytime the counter rolls over.
+    always @(posedge i_clk )
+        if((f_past_valid) && (r_count < $past(r_count)))
+            assert(o_carry);
+        else
+    //	2. That o_carry is never true on any other clock cycles.
+            assert(!o_carry);
+    
+    //	3. That any time o_carry is true, the counter must be equal to zero.
+    always @(posedge i_clk)
+        if(f_past_valid & o_carry)begin
+            assert(r_count==32'd0);
+    //	4. That prior to any clock where o_carry is true, the counter must be
+    //		equal to -1.
+            assert($past(r_count)==-32'd1);
+        end
 `endif
 endmodule
