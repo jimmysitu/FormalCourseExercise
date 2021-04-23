@@ -15,6 +15,7 @@ autoconf
 ./configure --prefix $ROOT
 make -j`nproc`
 make install
+cd $ROOT
 
 # Install Z3
 cd z3
